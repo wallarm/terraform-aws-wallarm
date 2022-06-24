@@ -1,6 +1,6 @@
 # Appendix for for the vpc-mirror example: Gettings ENIs
 
-**INFO** This is not a Terraform module or a module example configuration. This document provides you with the details on getting [AWS ENIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) to run the [example Wallarm solution analyzing traffic mirrored by AWS VPC]TBD.
+**INFO** This is not a Terraform module or a module example configuration. This document provides you with the details on getting [AWS ENIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) to run the [example Wallarm solution analyzing traffic mirrored by AWS VPC](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/vpc-mirror).
 
 This folder includes the following configuration examples allowing to get ENI IDs in different ways:
 

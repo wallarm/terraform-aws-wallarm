@@ -9,7 +9,7 @@ This example demonstrates how to deploy the Wallarm Terraform module as an Out-o
 
 ## Solution architecture
 
-<!--TBD ![Wallarm scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-for-traffic-mirrored-by-vpc.png?raw=true) -->
+![Wallarm scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-for-traffic-mirrored-by-vpc.png?raw=true)
 
 This example Wallarm solution has the following components:
 
