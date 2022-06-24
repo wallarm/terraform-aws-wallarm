@@ -1,0 +1,52 @@
+#!/bin/bash
+set -e
+
+### Prevent running without wallarm enabled, don't warm
+### health check before all things get done
+###
+systemctl stop nginx.service
+
+TMPDIRNAME=/tmp/_wallarm_cloud_init
+mkdir -p $TMPDIRNAME
+
+%{ if global_snippet != "" ~}
+cat <<EOF | tee $TMPDIRNAME/global-snippet.conf
+${global_snippet}
+EOF
+%{ endif ~}
+%{ if http_snippet != "" ~}
+cat <<EOF | tee $TMPDIRNAME/http-snippet.conf
+${http_snippet}
+EOF
+%{ endif ~}
+%{ if server_snippet != "" ~}
+cat <<EOF | tee $TMPDIRNAME/server-snippet.conf
+${server_snippet}
+EOF
+%{ endif ~}
+
+/usr/share/wallarm-common/cloud-init.py \
+    -t ${token} \
+    %{~ if host != "" }-H ${host}%{~ endif } \
+    -p ${preset} \
+    -m ${mode} \
+    %{~ if proxy_pass != "" }--proxy-pass ${proxy_pass}%{~ endif } \
+    ${libdetection ? "--libdetection" : ""} \
+    %{~ if global_snippet != "" }--global-snippet $TMPDIRNAME/global-snippet.conf%{~ endif } \
+    %{~ if http_snippet != "" }--http-snippet $TMPDIRNAME/http-snippet.conf%{~ endif } \
+    %{~ if server_snippet != "" }--server-snippet $TMPDIRNAME/server-snippet.conf%{ endif } \
+
+systemctl restart nginx.service
+
+rm -rf $TMPDIRNAME
+
+echo Wallarm Node successfuly configured!
+echo Running post-script...
+
+set +e
+
+%{ if post_script != "" ~}
+${post_script}
+%{ endif ~}
+
+echo Post-script finished!
