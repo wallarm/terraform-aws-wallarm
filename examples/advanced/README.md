@@ -1,8 +1,8 @@
 # Example deployment of Wallarm AWS Terraform Module: Proxy advanced solution
 
-This example demonstrates how to deploy Wallarm as an inline proxy with advanced settings to AWS Virtual Private Cloud (VPC) using the Terraform module. It is a lot like the [simple proxy deployment]TBD but with some frequent advanced configuration options demonstrated.
+This example demonstrates how to deploy Wallarm as an inline proxy with advanced settings to AWS Virtual Private Cloud (VPC) using the Terraform module. It is a lot like the [simple proxy deployment](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/proxy) but with some frequent advanced configuration options demonstrated.
 
-For an easier start with this example, have a look at the [simple proxy example]TBD first. 
+For an easier start with this example, have a look at the [simple proxy example](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/proxy) first. 
 
 Wallarm proxy advanced solution (as well as a simple proxy) provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions.
 
@@ -25,7 +25,7 @@ The proxy advanced solution differs from the simple one as follows:
 
 ## Solution architecture
 
-<!--TBD ![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true) -->
+![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true)
 
 The example Wallarm proxy advanced solution has the following components:
 

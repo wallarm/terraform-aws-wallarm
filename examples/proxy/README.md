@@ -4,7 +4,7 @@ This example demonstrates how to deploy Wallarm as an inline proxy to AWS Virtua
 
 Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions.
 
-This is the **recommended** deployment option since it provides the most functional and easy to implement solution. You can see the solution flexibility in action by trying the [proxy advanced solution]TBD.
+This is the **recommended** deployment option since it provides the most functional and easy to implement solution. You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
 
 ## Key characteristics
 
@@ -13,7 +13,7 @@ This is the **recommended** deployment option since it provides the most functio
 
 ## Solution architecture
 
-<!--TBD ![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true) -->
+![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true)
 
 The example Wallarm proxy solution has the following components:
 

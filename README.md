@@ -4,9 +4,9 @@
 
 This repo contains the module for deploying Wallarm on [AWS](https://aws.amazon.com/) using Terraform.
 
-<!--TBD ![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true) -->
+![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true)
 
-By implementing the Wallarm Terraform module, we have provided the solution enabling two core Wallarm deployment options: proxy and mirror security solutions. The deployment option is easily controlled by the `preset` Wallarm module variable. You can try both options by deploying either the [provided examples]TBD-to-github-examples-folder or configuring the module itself.
+By implementing the Wallarm Terraform module, we have provided the solution enabling two core Wallarm deployment options: proxy and mirror security solutions. The deployment option is easily controlled by the `preset` Wallarm module variable. You can try both options by deploying either the [provided examples](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples) or configuring the module itself.
 
 ## Requirements
 
@@ -18,8 +18,8 @@ By implementing the Wallarm Terraform module, we have provided the solution enab
 
 This repo has the following folder structure:
 
-* [`modules`](https://github.com/wallarm/terraform-aws-wallarm/tree/master/modules): This folder contains submodules required to deploy the Wallarm module.
-* [`examples`](https://github.com/wallarm/terraform-aws-wallarm/tree/master/examples): This folder shows examples of different ways to use the module from the `modules` folder to deploy Wallarm.
+* [`modules`](https://github.com/wallarm/terraform-aws-wallarm/tree/main/modules): This folder contains submodules required to deploy the Wallarm module.
+* [`examples`](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples): This folder shows examples of different ways to use the module from the `modules` folder to deploy Wallarm.
 
 To deploy Wallarm for production using this repo:
 
@@ -53,6 +53,6 @@ If you have questions or feature requests related to Wallarm AWS Module, do not 
 
 ## License
 
-This code is released under the [MIT License](https://github.com/wallarm/terraform-aws-wallarm/tree/master/LICENSE).
+This code is released under the [MIT License](https://github.com/wallarm/terraform-aws-wallarm/tree/main/LICENSE).
 
 Copyright &copy; 2022 Wallarm, Inc.
