@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "wallarm" {
-  source = "../.." # TODO
+  source = "wallarm/wallarm/aws"
 
   app_name = "wallarm"
 
