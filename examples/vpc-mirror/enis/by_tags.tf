@@ -1,8 +1,6 @@
 ### Example: Collect ENI IDs by tag
-###
-### So, you can catch ENIs by tags that can be set manually. Due to
-### there is no way to automaticaly create ENI for anything and ENI
-### have PRECONFIGURED TAGS, so, this is rarely-used option
+### This is the rarely used method since
+### ENIs have pre-configured tags that can be set manually.
 ###
 variable "tags" {
   type = map(string)
