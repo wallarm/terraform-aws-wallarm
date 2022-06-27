@@ -5,7 +5,7 @@ This example demonstrates how to deploy the Wallarm Terraform module as an Out-o
 ## Key characteristics
 
 * Wallarm processes traffic in the asynchronous mode (`preset=mirror`) without affecting the current traffic flow that makes the approach the safest one.
-* Wallarm solution is deployed as a separate network layer that enables you to configure it independetly from other layers and place the layer in almost any network structure position. The recommended position is in the private network.
+* Wallarm solution is deployed as a separate network layer that enables you to configure it independently from other layers and place the layer in almost any network structure position. The recommended position is in the private network.
 
 ## Solution architecture
 
@@ -18,10 +18,10 @@ This example Wallarm solution has the following components:
 * Amazon VPC configured to mirror either the load balancer traffic or the instance traffic (dashed arrow on the scheme).
 * NLB for mirrored packets that receives the mirrored traffic via UDP/4789 as Ethernet frames encapsulated into VXLAN.
 * Traffic rebuilder distributing traffic across Auto Scaling Group instances that detect HTTP requests among VXLAN encapsulated packets. The provided example deploys this layer on the cloud-init script execution stage and uses [goreplay](https://github.com/buger/goreplay) to retreive HTTP requests from the traffic.
-* ALB forwarding retreived HTTP requests to Wallarm instances.
+* ALB forwarding retrieved HTTP requests to Wallarm instances.
 * Wallarm node instances analyzing requests from an internal ALB and proxying any requests further.
 
-    The example runs the Wallarm nodes in the monitoring mode that drives the described behavior. Wallarm nodes can also operate in other modes including those aimed to blocking malicious requests and forwarding only legitimate ones further. To learn more about Wallarm node modes, use [our documentation](https://docs.wallarm.com/admin-en/configure-wallarm-mode/).
+    The example runs the Wallarm nodes in the monitoring mode that drives the described behavior. Wallarm nodes can also operate in other modes including those aimed at blocking malicious requests and forwarding only legitimate ones further. To learn more about Wallarm node modes, use [our documentation](https://docs.wallarm.com/admin-en/configure-wallarm-mode/).
 
 ## Code Components
 
@@ -42,7 +42,7 @@ The described example solution has some limitations inherent in the AWS VPC traf
 * Mirroring traffic from EC2 may result in load balancer packet catched.
 * Real IP address can only be revealed from the ALB + EC2 stack.
 * Proxy protocols (e.g. v1 for ELB, v2 for NLB) are no supported even if traffic is mirrored from EC2 ENI.
-* If EKS is based on the default CNI (AWS VPC CNI), ALB Ingress works only with the `"alb.ingress.kubernetes.io/target-type": "instance"` annotaion applied.
+* If EKS is based on the default CNI (AWS VPC CNI), ALB Ingress works only with the `"alb.ingress.kubernetes.io/target-type": "instance"` annotation applied.
 
 ## Running the example Wallarm mirror solution for AWS VPC
 

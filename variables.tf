@@ -266,5 +266,5 @@ variable "server_snippet" {
 variable "post_script" {
   type        = string
   default     = ""
-  description = "Custom script to be run after the Wallarm node initialization script (cloud-init), e.g. to place some content from AWS S3 to an instance directory. This example will also require access to AWS S3 that you can configure via the 'extra_policies' variable."
+  description = "Custom script to be run after the Wallarm node initialization script (cloud-init)."
 }

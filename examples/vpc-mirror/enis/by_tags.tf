@@ -1,8 +1,8 @@
 ### Example: Collect ENI IDs by tag
 ###
-### So, you can catch ENIs by tags that can be set manually. Due to
-### there is no way to automaticaly create ENI for anything and ENI
-### have PRECONFIGURED TAGS, so, this is rarely-used option
+### This is the rare method to be used to get ENIs by
+### manually created tags since AWS does not
+### create any tags for ENIs automatically.
 ###
 variable "tags" {
   type = map(string)
