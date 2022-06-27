@@ -30,7 +30,7 @@ To deploy Wallarm for production using this repo:
 
     ```conf
     module "wallarm" {
-      source     = "app.terraform.io/wallarm/wallarm/aws"
+      source = "wallarm/wallarm/aws"
 
       vpc_id     = "..."
 
