@@ -220,7 +220,7 @@ variable "host" {
 variable "preset" {
   type        = string
   default     = "proxy"
-  description = "Wallarm deployment scheme. Possible values: 'proxy' and 'mirror'. More details: TODO LINK"
+  description = "Wallarm deployment scheme. Possible values: 'proxy' and 'mirror'. More details: https://docs.wallarm.com/waf-installation/cloud-platforms/aws/terraform-module/overview/"
   validation {
     condition     = contains(["proxy", "mirror", "custom"], var.preset)
     error_message = "The 'preset' value can be only 'proxy' or 'mirror'."
@@ -230,7 +230,7 @@ variable "preset" {
 variable "proxy_pass" {
   type        = string
   default     = ""
-  description = "Proxied server protocol and address. Wallarm node will process requests sent to the specified address and proxy legitimate ones to. Required if 'preset' is 'proxy'. As a protocol, 'http' or 'https' can be specified. The address can be specified as a domain name or IP address, and an optional port. More details: TODO LINK"
+  description = "Proxied server protocol and address. Wallarm node will process requests sent to the specified address and proxy legitimate ones to. As a protocol, 'http' or 'https' can be specified. The address can be specified as a domain name or IP address, and an optional port."
 }
 
 variable "mode" {
@@ -248,23 +248,23 @@ variable "libdetection" {
 variable "global_snippet" {
   type        = string
   default     = ""
-  description = "Custom configuration to be added to the NGINX global configuration. More details: TODO LINK"
+  description = "Custom configuration to be added to the NGINX global configuration. You can put the file with the configuration to the Terraform code directory and specify the path to this file in this variable. You will find the variable configuration example in the example of the proxy advanced solution deployment: https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced/main.tf#L17"
 }
 
 variable "http_snippet" {
   type        = string
   default     = ""
-  description = "Custom configuration to be added to the 'http' configuration block of NGINX. More details: TODO LINK"
+  description = "Custom configuration to be added to the 'http' configuration block of NGINX. You can put the file with the configuration to the Terraform code directory and specify the path to this file in this variable. You will find the variable configuration example in the example of the proxy advanced solution deployment: https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced/main.tf#L18"
 }
 
 variable "server_snippet" {
   type        = string
   default     = ""
-  description = "Custom configuration to be added to the 'server' configuration block of NGINX. More details: TODO LINK"
+  description = "Custom configuration to be added to the 'server' configuration block of NGINX. You can put the file with the configuration to the Terraform code directory and specify the path to this file in this variable. You will find the variable configuration example in the example of the proxy advanced solution deployment: https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced/main.tf#L19"
 }
 
 variable "post_script" {
   type        = string
   default     = ""
-  description = "Custom script to be run after the Wallarm node initialization script (cloud-init)."
+  description = "Custom script to be run after the Wallarm node initialization script (cloud-init), e.g. to place some content from AWS S3 to an instance directory. This example will also require access to AWS S3 that you can configure via the 'extra_policies' variable."
 }

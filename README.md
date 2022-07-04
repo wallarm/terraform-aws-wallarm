@@ -23,7 +23,7 @@ This repo has the following folder structure:
 
 To deploy Wallarm for production using this repo:
 
-1. Sign up for Wallarm Console in the [EU Cloud](https://my.wallarm.com/nodes) or [US Cloud](https://us1.my.wallarm.com/nodes).
+1. Sign up for Wallarm Console in the [EU Cloud](https://my.wallarm.com/signup) or [US Cloud](https://us1.my.wallarm.com/signup).
 1. Open Wallarm Console → **Nodes**  and create the node of the **Wallarm node** type.
 1. Copy the generated node token.
 1. Add the `wallarm` module code to your Terraform configuration:
