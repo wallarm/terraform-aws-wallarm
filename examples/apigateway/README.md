@@ -8,6 +8,7 @@ Wallarm proxy solution provides an additional functional network layer serving a
 
 * Wallarm processes traffic in the synchronous mode that does not limit Wallarm capabilities and enables instant threat mitigation (`preset=proxy`).
 * Wallarm solution is deployed as a separate network layer that enables you to control it independently from API Gateway. You can use all API Gateway features, Wallarm deployment don't restrict anything in API Gateway.
+* This example CREATES new API Gateway with single route `/demo/demo`.
 
 ## Solution architecture
 
