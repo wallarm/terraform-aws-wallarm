@@ -6,8 +6,6 @@ Wallarm proxy solution provides an additional functional network layer serving a
 
 This is the **recommended** deployment option since it provides the most functional and easy to implement solution. You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
 
-We also have an example deployment special for API Gateway. You can see the solution flexibility in action by trying the [proxy apigateway solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/apigateway).
-
 ## Key characteristics
 
 * Wallarm processes traffic in the synchronous mode that does not limit Wallarm capabilities and enables instant threat mitigation (`preset=proxy`).
@@ -25,7 +23,7 @@ The example Wallarm proxy solution has the following components:
     The example runs Wallarm nodes in the monitoring mode that drives the described behavior. Wallarm nodes can also operate in other modes including those aimed at blocking malicious requests and forwarding only legitimate ones further. To learn more about Wallarm node modes, use [our documentation](https://docs.wallarm.com/admin-en/configure-wallarm-mode/).
 * The services Wallarm nodes proxy requests to. The service can be of any type, e.g.:
 
-    * AWS API Gateway application connected to VPC via VPC Endpoints
+    * AWS API Gateway application connected to VPC via VPC Endpoints (the corresponding Wallarm Terraform deployment is covered in the [example for API Gateway](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/apigateway))
     * AWS S3
     * EKS nodes running in the EKS cluster (configuration of Internal Load Balancer or NodePort Service is recommended for this case)
     * Any other backend service
