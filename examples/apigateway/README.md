@@ -42,7 +42,7 @@ This example has the following code components:
 The `apigw_private` variable sets the API Gateway endpoint type:
 
 * With the "regional" option, Wallarm node instances will submit requests to the publicly available API Gateway [`execute-api`](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-call-api.html) service.
-* With the "private" option - to AWS VPC Endpoints attached to the `execute-api` service.
+* With the "private" option - to AWS VPC Endpoints attached to the `execute-api` service. **For production deployment, the "private" option is the recommended one.**
 
 ### More options to restrict access to the API Gateway
 
