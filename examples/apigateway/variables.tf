@@ -12,13 +12,13 @@ variable "token" {
 variable "apigw_name" {
   type        = string
   default     = "protected-by-wallarm"
-  description = "Name of API Gateway to create for this demo."
+  description = "Name of the Amazon API Gateway to create for this example."
 }
 
 variable "apigw_private" {
   type        = bool
   default     = false
-  description = "Defines type of API Gateway to create. \"true\" creates \"PRIVATE\", and \"false\" creates \"REGIONAL\"."
+  description = "The type of the created Amazon API Gateway. \"true\" sets the \"private\" type, \"false\" sets the \"regional\" type."
 }
 
 variable "vpc_id" {

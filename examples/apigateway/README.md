@@ -1,14 +1,13 @@
-# Example deployment of Wallarm AWS Terraform Module: Proxy for API Gateway
+# Example deployment of Wallarm AWS Terraform Module: Proxy solution for Amazon API Gateway
 
-This example demonstrates how to protect AWS API Gateway with Wallarm as an inline proxy, deployed into AWS Virtual Private Cloud (VPC) using the Terraform module.
+This example demonstrates how to protect [Amazon API Gateway](https://aws.amazon.com/api-gateway/) with Wallarm deployed as an inline proxy to AWS Virtual Private Cloud (VPC) using the Terraform module.
 
-Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions. It means that you can build any HTTP routing that you want, so protecting API Gateway can be another option.
+Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions. It can route requests to almost any service type including Amazon API Gateway without limiting its capabilities.
 
 ## Key characteristics
 
 * Wallarm processes traffic in the synchronous mode that does not limit Wallarm capabilities and enables instant threat mitigation (`preset=proxy`).
-* Wallarm solution is deployed as a separate network layer that enables you to control it independently from API Gateway. You can use all API Gateway features, Wallarm deployment don't restrict anything in API Gateway.
-* This example CREATES new API Gateway with single route `/demo/demo`.
+* Wallarm solution is deployed as a separate network layer that enables you to control it independently from API Gateway.
 
 ## Solution architecture
 
@@ -17,42 +16,64 @@ Wallarm proxy solution provides an additional functional network layer serving a
 The example Wallarm proxy solution has the following components:
 
 * Internet-facing Application Load Balancer routing traffic to Wallarm node instances.
-* Wallarm node instances analyzing traffic and proxying any requests to API Gateway. For this example, you can create "regional" or "private" API Gateway. For "regional" you can use only publicly-faced endpoint for `execute-api`. For "private" all traffic from Wallarm nodes will be forwared through AWS VPC Endpoints, attached to `execute-api`.
-* API Gateway receives analyzed requests and perform as same as without Wallarm
+* Wallarm node instances analyzing traffic and proxying any requests to API Gateway.
 
-The example runs Wallarm nodes in the monitoring mode that drives the described behavior. Wallarm nodes can also operate in other modes including those aimed at blocking malicious requests and forwarding only legitimate ones further. To learn more about Wallarm node modes, use [our documentation](https://docs.wallarm.com/admin-en/configure-wallarm-mode/).
+    The example runs Wallarm nodes in the monitoring mode that drives the described behavior. Wallarm nodes can also operate in other modes including those aimed at blocking malicious requests and forwarding only legitimate ones further. To learn more about Wallarm node modes, use [our documentation](https://docs.wallarm.com/admin-en/configure-wallarm-mode/).
+* API Gateway the Wallarm nodes proxy requests to. The API Gateway has the following settings:
 
-All listed components will be deployed by the provided `wallarm` example module.
+    * The `/demo/demo` path assigned.
+    * A single mock configured.
+    * During this Terraform module deployment, you can choose either the "regional" or "private" [endpoint type for the API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html). More details on these types and migration between them are provided below.
+
+    Please note that the provided example deploys a regular Amazon API Gateway, so its operation will not be affected by Wallarm nodes.
+
+All listed components including the API Gateway will be deployed by the provided `wallarm` example module.
 
 ## Code components
 
 This example has the following code components:
 
 * `main.tf`: the main configuration of the `wallarm` module to be deployed as a proxy solution. The configuration produces an AWS ALB and Wallarm instances.
-* `apigw.tf`: the example API Gateway, with a single "MOCK" integration accessible by `/demo/demo` request path. This file can create "regional" or "private" types of API Gateway. The difference between and migration guide are described below.
-* `endpoint.tf`: the AWS VPC Endpoint configuration for "private" API Gateway.
+* `apigw.tf`: the configuration producing the Amazon API Gateway accessible under the `/demo/demo` path with a single mock integration configured. During the module deployment, you can also choose either the "regional" or "private" endpoint type (see details below).
+* `endpoint.tf`: the AWS VPC Endpoint configuration for the "private" type of the API Gateway endpoint.
 
-## Difference between "private" and "regional" API Gateways
+## Difference between the "regional" and "private" API Gateway endpoints
 
-You can restrict access to you API Gateway regardless "private" or "regional" is it. For both or ones you can use [resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html) for rulling access, and for "regional" you can restrict it by [source ip](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html), and for "private" (that is not accessible from public networks by design) [by VPC and/or Endpoint](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html). Nevertheless, it is important to change your API Gateway to "private" otherwise traffic from Wallarm nodes to API Gateway will be passed via the public network and can produce additional charges.
+The `apigw_private` variable sets the API Gateway endpoint type:
 
-### Migration between types of API Gateways
+* With the "regional" option, Wallarm node instances will submit requests to the publicly available API Gateway [`execute-api`](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-call-api.html) service.
+* With the "private" option - to AWS VPC Endpoints attached to the `execute-api` service.
 
-You can change type of API Gateway without recreation of the component. But you must keep in mind these specials of the procedure:
-* During "regional" -> "private" migration publicly-faced endpoints (both via `execute-api` and via domain names) becomes to be unaccesible
-* During "private" -> "regional" migration AWS VPC Endpoints targeted to you API Gateway will be immediately detached and API Gateway becomes to be unaccessible
-* NGINX cannot detect changing of DNS names (in community version), and after changing type of API Gateway you need to trigger configuration refresh in Wallarm nodes (reboot, instance recreate, or just `nginx -s reload` in each instance)
+### More options to restrict access to the API Gateway
 
-So, there is a preferable way to run this from "regional" to "private":
-* Create AWS VPC Endpoint to `execute-api` (see example in `endpoint.tf`)
-* Switch type of API Gateway and add previosly created endpoint to API Gateway configuration. After success you traffic will be stopped
-* Run `nginx -s reload` on each Wallarm node or just recreate every Wallarm node. After that your traffic becomes to work again
+Amazon also enables you to restrict access to your API Gateway regardless of the "private" or "regional" endpoint type as follows:
 
-For migration from "private" to "regional":
-* Remove endpoint required for running in "private" mode. Switch type of API Gateway.
-* Run `nginx -s reload` on each Wallarm node or just recreate every Wallarm node. After that your traffic becomes to work again
+* Using [resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html) with any of two endpoint types specified.
+* Managing access by [source IPs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html), if the endpoint type is "private".
+* Managing access by [VPC and/or Endpoint](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies-examples.html), if the endpoint type is "private" that already assumes the API Gateway to be unavailable from public networks by design.
 
-For details use reference links in the end of this topic.
+### Migration between API Gateway endpoint types
+
+You can change the API Gateway endpoint type without recreation of the component but please consider the following:
+
+* Once the type is changed from "regional" to "private", public endpoints will become private and thus unavailable from public resources. It is applicable to both the `execute-api` endpoints and domain names.
+* Once the type is changed from "private" to "regional", AWS VPC Endpoints targeted to your API Gateway will be immediately detached and API Gateway will become unavailable.
+* Since NGINX of the community version cannot automatically detect DNS name changes, the changed endpoint type should be followed by the manual NGINX restart on the Wallarm node instances.
+
+    You can reboot, re-create instances or run `nginx -s reload` in each instance. 
+
+If changing the endpoint type from "regional" to "private":
+
+1. Create AWS VPC Endpoint and attach it to `execute-api`. You will find the example in the `endpoint.tf` configuration file.
+1. Switch the API Gateway endpoint type and specify the AWS VPC Endpoint in the API Gateway configuration. Once completed, the traffic flow will be stopped.
+1. Run `nginx -s reload` in each Wallarm node instance or just re-create each Wallarm node. Once it is completed, the traffic flow will be restored.
+
+It is NOT recommended to change the endpoint type from "private" to "regional" but if you ever do:
+
+1. Remove endpoint required for running in the "private" mode and only then switch the API Gateway endpoint to "regional".
+1. Run `nginx -s reload` in each Wallarm node instance or just re-create each Wallarm node. Once it is completed, the traffic flow will be restored.
+
+**For production, it is recommended to change your API Gateway to "private"**, otherwise traffic from Wallarm nodes to API Gateway will be passed via the public network and can produce additional charges.
 
 ## Requirements
 
@@ -60,7 +81,7 @@ For details use reference links in the end of this topic.
 * Access to the account with the **Administrator** role in Wallarm Console in the [EU Cloud](https://my.wallarm.com/) or [US Cloud](https://us1.my.wallarm.com/)
 * Access to `https://api.wallarm.com` if working with EU Wallarm Cloud or to `https://us1.api.wallarm.com` if working with US Wallarm Cloud. Please ensure the access is not blocked by a firewall
 
-## Running the example Wallarm AWS proxy for API Gateway
+## Running the example Wallarm AWS proxy solution for API Gateway
 
 1. Sign up for Wallarm Console in the [EU Cloud](https://my.wallarm.com/nodes) or [US Cloud](https://us1.my.wallarm.com/nodes).
 1. Open Wallarm Console → **Nodes** and create the node of the **Wallarm node** type.
@@ -70,9 +91,8 @@ For details use reference links in the end of this topic.
     ```
     git clone https://github.com/wallarm/terraform-aws-wallarm.git
     ```
-1. Set variable values in the `default` options in the `examples/apigateway/variables.tf` file of the cloned repository and save changes. You must define at least `token`, `vpc_id`, `public_subnets`, and `private_subnets`.
-1. Set `apigw_private` variable to `true` of `false`. You can try to make migrations described above with this variable.
-1. Deploy the stack by executing the following commands from the `examples/proxy` directory:
+1. Set variable values in the `default` options in the `examples/apigateway/variables.tf` file of the cloned repository and save changes.
+1. Deploy the stack by executing the following commands from the `examples/apigateway` directory:
 
     ```
     terraform init
