@@ -25,7 +25,7 @@ The example Wallarm proxy solution has the following components:
     * A single mock configured.
     * During this Terraform module deployment, you can choose either the "regional" or "private" [endpoint type for the API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-endpoint-types.html). More details on these types and migration between them are provided below.
 
-    Please note that the provided module deploys a regular Amazon API Gateway, so its operation will not be affected by Wallarm nodes.
+    Please note that the provided example deploys a regular Amazon API Gateway, so its operation will not be affected by Wallarm nodes.
 
 All listed components including the API Gateway will be deployed by the provided `wallarm` example module.
 
@@ -72,6 +72,8 @@ It is NOT recommended to change the endpoint type from "private" to "regional" b
 
 1. Remove endpoint required for running in the "private" mode and only then switch the API Gateway endpoint to "regional".
 1. Run `nginx -s reload` in each Wallarm node instance or just re-create each Wallarm node. Once it is completed, the traffic flow will be restored.
+
+**For production, it is recommended to change your API Gateway to "private"**, otherwise traffic from Wallarm nodes to API Gateway will be passed via the public network and can produce additional charges.
 
 ## Requirements
 
