@@ -1,6 +1,6 @@
 # Example deployment of Wallarm AWS Terraform Module: Proxy solution
 
-This example demonstrates how to deploy Wallarm as an inline proxy to AWS Virtual Private Cloud (VPC) using the Terraform module.
+This example demonstrates how to deploy Wallarm as an inline proxy to an existing AWS Virtual Private Cloud (VPC) using the Terraform module.
 
 Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions.
 
