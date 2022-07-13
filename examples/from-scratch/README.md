@@ -35,8 +35,6 @@ This example solution has the same architecture as the [regular proxy solution](
 
     By default, Wallarm nodes will forward traffic to `https://httpbin.org`. During this example launch, you will be able to specify any other service domain or path available from AWS Virtual Private Cloud (VPC) to proxy traffic to.
 
-    The `https_redirect_code = 302` module configuration option will allow you to safely redirect HTTP requests to HTTPS by AWS ALB.
-
 ## Code components
 ​
 This example has the only `main.tf` configuration file with the following module settings:
