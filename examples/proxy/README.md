@@ -93,7 +93,7 @@ To address the issue, please review and fix the following settings:
 * Domain names specified in the NGINX configuration have been successfully resolved (e.g. the `proxy_pass` value)
 
 
-**EXTREME WAY** If the above settings are valid, you can try to find the issue reason by manually disabling ELB health checks. It will keep instances active even if service configuration is invalid, instances will not restart. You will be able to thoroughly explore the logs and debug the service rather than investigate the issue in several minutes.
+**EXTREME WAY** If the above settings are valid, you can try to find the issue reason by manually disabling ELB health checks in AutoScalin group settings. It will keep instances active even if service configuration is invalid, instances will not restart. You will be able to thoroughly explore the logs and debug the service rather than investigate the issue in several minutes.
 
 ## References
 
