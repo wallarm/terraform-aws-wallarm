@@ -73,6 +73,7 @@ module "wallarm" {
   lb_subnet_ids       = local.public_subnets
   instance_subnet_ids = local.private_subnets
 
+  host  = var.host
   token = var.token
 
   lb_deletion_protection = false
