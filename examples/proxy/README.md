@@ -51,7 +51,7 @@ This example has the following code components:
 * Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 * Access to the account with the **Administrator** role in Wallarm Console in the [EU Cloud](https://my.wallarm.com/) or [US Cloud](https://us1.my.wallarm.com/)
 * Access to `https://api.wallarm.com` if working with EU Wallarm Cloud or to `https://us1.api.wallarm.com` if working with US Wallarm Cloud. Please ensure the access is not blocked by a firewall
-* To run the example with the SSL and DNS features enabled, configure the [Route 53](https://aws.amazon.com/route53/) service
+* To run the example with the SSL and DNS features enabled, configure the [Route 53 hosting zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) service
 
 ## Running the example Wallarm AWS proxy solution
 
