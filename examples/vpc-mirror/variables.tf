@@ -4,6 +4,12 @@ variable "region" {
   description = "AWS region. More details: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html"
 }
 
+variable "host" {
+  type        = string
+  default     = "api.wallarm.com"
+  description = "Wallarm API server. Possible values: 'api.wallarm.com' for the EU Cloud, 'us1.api.wallarm.com' for the US Cloud. By default, 'api.wallarm.com'. More details: https://docs.wallarm.com/about-wallarm-waf/overview/#cloud"
+}
+
 variable "token" {
   type        = string
   # default = "xxx-some-base64-xxx"

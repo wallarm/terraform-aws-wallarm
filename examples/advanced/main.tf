@@ -29,6 +29,7 @@ module "wallarm" {
   lb_enabled          = false
   instance_subnet_ids = var.private_subnets
 
+  host  = var.host
   token = var.token
 
   post_script = file(format("%s/post-cloud-init.sh", path.module))

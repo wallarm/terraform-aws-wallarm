@@ -40,13 +40,18 @@ This example has the following code components:
 
 * `main.tf`: the main configuration of the `wallarm` module to be deployed as a proxy solution. The configuration produces an AWS ALB and Wallarm instances.
 * `ssl.tf`: the SSL/TLS offload configuration that automatically issues a new AWS Certificate Manager (ACM) for the domain specified in the `domain_name` variable and binds it to AWS ALB.
+
+    To disable the feature, remove or comment out the `ssl.tf` and `dns.tf` files, and also comment out the `lb_ssl_enabled`, `lb_certificate_arn`, `https_redirect_code`, `depends_on` options in the `wallarm` module definition. With the feature disabled, you will be able to use just the HTTP port (80).
 * `dns.tf`: AWS Route 53 configuration provisioning DNS record for AWS ALB.
+
+    To disable the feature, follow the note above.
 
 ## Requirements
 
 * Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 * Access to the account with the **Administrator** role in Wallarm Console in the [EU Cloud](https://my.wallarm.com/) or [US Cloud](https://us1.my.wallarm.com/)
 * Access to `https://api.wallarm.com` if working with EU Wallarm Cloud or to `https://us1.api.wallarm.com` if working with US Wallarm Cloud. Please ensure the access is not blocked by a firewall
+* To run the example with the SSL and DNS features enabled, configure the [Route 53 hosting zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html)
 
 ## Running the example Wallarm AWS proxy solution
 
@@ -88,7 +93,7 @@ To address the issue, please review and fix the following settings:
 * Domain names specified in the NGINX configuration have been successfully resolved (e.g. the `proxy_pass` value)
 
 
-**EXTREME WAY** If the above settings are valid, you can try to find the issue reason by manually disabling ELB health checks. It will force instances to start even with an invalid NGINX configuration. You will have several minutes to explore the logs and debug the service.
+**EXTREME WAY** If the above settings are valid, you can try to find the issue reason by manually disabling ELB health checks in the Auto Scaling group settings. It will keep instances active even if service configuration is invalid, instances will not restart. You will be able to thoroughly explore the logs and debug the service rather than investigate the issue in several minutes.
 
 ## References
 
