@@ -36,6 +36,8 @@ To deploy Wallarm for production using this repo:
 
       preset     = "proxy"
       proxy_pass = "https://..."
+
+      host       = "api.wallarm.com" # or "us1.api.wallarm.com"
       token      = "..."
 
       instance_type = "..."
