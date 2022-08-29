@@ -1,6 +1,6 @@
 variable "upstream" {
   type    = string
-  default = "4.0"
+  default = "4.2"
 }
 
 variable "app_name" {
