@@ -34,7 +34,7 @@ Traffic mirroring is a feature provided by many web servers. Below is the docume
 
 ### NGINX
 
-The following snippet [should be added](http://nginx.org/en/docs/http/ngx_http_mirror_module.html) to the `server {}` context:
+You can stream mirrored requests from NGINX with the following snippet that [should be added](http://nginx.org/en/docs/http/ngx_http_mirror_module.html) to the `server {}` context. You can use this snippet with NGINX web server, NGINX Ingress Controllers (community, plus, and proprietar versions), and Wallarm Ingress Controller. See the snippet example:
 
 ```conf
 # ${TARGET} must be replaced with Internal ALB DNS name
@@ -55,85 +55,210 @@ location /mirror {
 }
 ```
 
+The detailed guideline can be found in [the official documentation](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/nginx-example/#nginx-configuration-to-mirror-the-traffic).
+
 ### Traefik
 
-[Traefik documentation](https://doc.traefik.io/traefik/routing/services/#mirroring-service)
+For Traefik web server follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/traefik-example/), or use [the official Traefik documentation](https://doc.traefik.io/traefik/routing/services/#mirroring-service).
 
 ```yaml
+### Dynamic configuration file
+### Note: entrypoints are described in static configuration file
 http:
   services:
-    mirrored-api:
+    ### This is how to map original and wallarm `services`.
+    ### In further `routers` configuration (see below), please 
+    ### use the name of this service (`with_mirroring`).
+    ###
+    with_mirroring:
       mirroring:
-        service: appv1
-        maxBodySize: 1024
+        service: "httpbin"
         mirrors:
-        - name: appv2
-          percent: 10
+          - name: "wallarm"
+            percent: 100
+
+    ### The `service` to mirror traffic to - the endpoint
+    ### that should receive the requests mirrored (copied)
+    ### from the original `service`.
+    ###
+    wallarm:
+      loadBalancer:
+        servers:
+          - url: "http://wallarm:8445"
+
+    ### Original `service`. This service should receive the
+    ### original traffic.
+    ###
+    httpbin:
+      loadBalancer:
+        servers:
+          - url: "http://httpbin:80/"
+
+  routers:
+    ### The router name must be the same as the `service` name
+    ### for the traffic mirroring to work (with_mirroring).
+    ###
+    with_mirroring:
+      entryPoints:
+        - "web"
+      rule: "Host(`mirrored.example.com`)"
+      service: "with_mirroring"
+
+    ### The router for the original traffic.
+    ###
+    just_to_original:
+      entryPoints:
+        - "web"
+      rule: "Host(`original.example.local`)"
+      service: "httpbin"
 ```
 
 ### Envoy
 
-[Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto)
+For Envoy web server it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/envoy-example/), or use [the official Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto).
 
 ```yaml
 static_resources:
   listeners:
-  - name: listener_0
-    address:
-      socket_address: { address: 0.0.0.0, port_value: 80 }
+  - address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 80
     filter_chains:
     - filters:
-      - name: envoy.http_connection_manager
-        config:
-          stat_prefix: ingress_http
-          route_config:
-            name: local_route
-            virtual_hosts:
-            - name: local_service
-              domains: ["*"]
-              routes:
-              - match: { prefix: "/" }
-                route:
-                  host_rewrite: original-backend.example.com
-                  cluster: myservice_cluster
-                  request_mirror_policy:
-                    cluster: myservice_test_cluster
-                    runtime_fraction: { default_value: { numerator: 25 } }
-          http_filters:
-          - name: envoy.router
+        - name: envoy.filters.network.http_connection_manager
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+            stat_prefix: ingress_http
+            codec_type: AUTO
+            route_config:
+              name: local_route
+              virtual_hosts:
+              - name: backend
+                domains:
+                - "*"
+                routes:
+                - match:
+                    prefix: "/"
+                  route:
+                    cluster: httpbin     # <-- link to the original cluster
+                    request_mirror_policies:
+                    - cluster: wallarm   # <-- link to the cluster receiving mirrored requests
+                      runtime_fraction:
+                        default_value:
+                          numerator: 100
+            http_filters:
+            - name: envoy.filters.http.router
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
   clusters:
-  - name: myservice_cluster
-    type: LOGICAL_DNS
-    hosts: [{ socket_address: { address: original-backend.example.com, port_value: 80 }}]
-  - name: myservice_test_cluster
-    type: LOGICAL_DNS
-    hosts: [{ socket_address: { address: internal-alb-mirror-endpoint.example.com, port_value: 8445 }}]
+  ### Definition of original cluster
+  ###
+  - name: httpbin
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: httpbin
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              ### Address of the original endpoint. Address is DNS name
+              ### or IP address, port_value is TCP port number
+              ###
+              socket_address:
+                address: httpbin # <-- definition of the original cluster
+                port_value: 80
+
+  ### Definition of the cluster receiving mirrored requests
+  ###
+  - name: wallarm
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: wallarm
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              ### Address of the original endpoint. Address is DNS name
+              ### or IP address, port_value is TCP port number. Wallarm
+              ### mirror schema can be deployed with any port but the
+              ### default value is TCP/8445.
+              ###
+              socket_address:
+                address: wallarm
+                port_value: 8445
 ```
 
 ### Istio
 
-[Istio documentation](https://istio.io/latest/docs/tasks/traffic-management/mirroring/)
+For Istio it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/istio-example/), or use [the official Istio documentation](https://istio.io/latest/docs/tasks/traffic-management/mirroring/).
 
 ```yaml
+---
+### Configuration of destination for mirrored traffic
+###
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: wallarm-external-svc
+spec:
+  hosts:
+    - some.external.service.tld # mirroring destination address
+  location: MESH_EXTERNAL
+  ports:
+    - number: 8445 # mirroring destination port
+      name: http
+      protocol: HTTP
+  resolution: DNS
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: httpbin
 spec:
   hosts:
-    - httpbin
+    - ...
+  gateways:
+    ### Name of istio `Gateway` component. Required for handling traffic from
+    ### external sources
+    ###
+    - httpbin-gateway
+    ### Special label, enables this virtual service routes to work with requests
+    ### from Kubernetes pods (in-cluster communication not via gateways)
+    ###
+    - mesh
   http:
-  - route:
-    - destination:
-        host: original-backend.example.com
-        subset: v1
-      weight: 100
-    mirror:
-      host: internal-alb-mirror-endpoint.example.com
-      port: 8445
-      subset: v2
-    mirrorPercentage:
-      value: 100.0
+    - route:
+        - destination:
+            host: httpbin
+            port:
+              number: 80
+          weight: 100
+      mirror:
+        host: some.external.service.tld # mirroring destination address
+        port:
+          number: 8445 # mirroring destination port
+---
+### For handling external requests
+###
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: httpbin-gateway
+spec:
+  selector:
+    istio: ingress
+    app: istio-ingress
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "httpbin.local"
 ```
 
 ## Limitations
