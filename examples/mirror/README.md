@@ -59,8 +59,7 @@ The detailed guideline can be found in [the official documentation](https://docs
 
 ### Traefik
 
-For Traefik web server follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/traefik-example/), or use [the official
-Traefik documentation](https://doc.traefik.io/traefik/routing/services/#mirroring-service)
+For Traefik web server follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/traefik-example/), or use [the official Traefik documentation](https://doc.traefik.io/traefik/routing/services/#mirroring-service).
 
 ```yaml
 ### Dynamic configuration file
@@ -116,7 +115,7 @@ http:
 
 ### Envoy
 
-For Envoy web server it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/envoy-example/), or use [the official Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto)
+For Envoy web server it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/envoy-example/), or use [the official Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto).
 
 ```yaml
 static_resources:
@@ -195,7 +194,7 @@ static_resources:
 
 ### Istio
 
-For Istio it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/istio-example/), or use [the official Istio documentation](https://istio.io/latest/docs/tasks/traffic-management/mirroring/)
+For Istio it is recommended to follow [the guildeline](https://docs.wallarm.com/admin-en/configuration-guides/traffic-mirroring/istio-example/), or use [the official Istio documentation](https://istio.io/latest/docs/tasks/traffic-management/mirroring/).
 
 ```yaml
 ---
