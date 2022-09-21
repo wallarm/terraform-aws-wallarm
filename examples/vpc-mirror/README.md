@@ -28,8 +28,8 @@ This example Wallarm solution has the following components:
 This example has the following code components:
 
 * `main.tf`: the main configuration of the `wallarm` module to be deployed as an AWS VPC mirror solution. The configuration produces an NLB, ALB and Wallarm instances.
-* `./modules/vpc-mirror/*`: the configuration of the AWS VPC traffic mirroring feature.
-* `./modules/vxlan-rebuild/*`: the module creating Auto Scaling Group that detects HTTP requests among mirrored traffic.
+* `./modules/vpc-mirror-sessions/*`: the internal example's module that configures the AWS VPC traffic mirroring feature.
+* `./modules/vpc-mirror-rebuild/*`: the internal example's module that creates Auto Scaling Group that detects HTTP requests among mirrored traffic.
 * `./enis/*`: examples of ENI configuration for different use cases.
 * `interfaces.tf`: collects ENI IDs for passing to the `vpc-mirror` module.
 
