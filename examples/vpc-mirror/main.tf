@@ -37,7 +37,10 @@ module "vxlan-rebuild" {
   mirror_endpoint = module.wallarm.other.mirror_endpoint
 
   ### Enables output of catched requests into service log.
-  ###   `journalctl -xefu gereplay.service`
+  ###   `journalctl -xefu goreplay.service`
+  ### or just with wireshark
+  ###   `tshark -f "udp port 4789" -Y http`
+  ###   `tshark -Y http`
   ###
   debug = true
 }
