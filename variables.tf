@@ -1,6 +1,6 @@
 variable "upstream" {
   type        = string
-  default     = "4.4"
+  default     = "4.6"
   description = "The Wallarm node version to be deployed. Minimum supported version is '4.0'. More details: https://docs.wallarm.com/updating-migrating/versioning-policy/#version-list"
   validation {
     condition     = can(regex("^[4-9]+\\.[\\d]+", var.upstream))
