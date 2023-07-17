@@ -1,6 +1,6 @@
-# Example deployment of Wallarm AWS Terraform Module: Proxy solution for Amazon API Gateway
+# Deploying Wallarm as Proxy for Amazon API Gateway
 
-This example demonstrates how to protect [Amazon API Gateway](https://aws.amazon.com/api-gateway/) with Wallarm deployed as an inline proxy to AWS Virtual Private Cloud (VPC) using the Terraform module.
+This example demonstrates how to protect [Amazon API Gateway](https://aws.amazon.com/api-gateway/) with Wallarm deployed as an inline proxy to AWS Virtual Private Cloud (VPC) using the [Terraform module](https://registry.terraform.io/modules/wallarm/wallarm/aws/).
 
 Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions. It can route requests to almost any service type including Amazon API Gateway without limiting its capabilities.
 
@@ -11,7 +11,7 @@ Wallarm proxy solution provides an additional functional network layer serving a
 
 ## Solution architecture
 
-![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy.png?raw=true)
+![Wallarm proxy scheme](https://github.com/wallarm/terraform-aws-wallarm/blob/main/images/wallarm-as-proxy-for-aws-api-gateway.png?raw=true)
 
 The example Wallarm proxy solution has the following components:
 
@@ -107,7 +107,6 @@ terraform destroy
 
 ## References
 
-* [Wallarm documentation](https://docs.wallarm.com)
 * [AWS VPC with public and private subnets (NAT)](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
 * [API Gateway Private APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
 * [API Gateway Policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)

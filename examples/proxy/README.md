@@ -1,10 +1,10 @@
-# Example deployment of Wallarm AWS Terraform Module: Proxy solution
+# Deploying Wallarm as Proxy in AWS VPC
 
-This example demonstrates how to deploy Wallarm as an inline proxy to an existing AWS Virtual Private Cloud (VPC) using the Terraform module.
+This example demonstrates how to deploy Wallarm as an inline proxy to an existing AWS Virtual Private Cloud (VPC) using the [Terraform module](https://registry.terraform.io/modules/wallarm/wallarm/aws/).
 
 Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions.
 
-This is the **recommended** deployment option since it provides the most functional and easy to implement solution. You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
+You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
 
 ## Key characteristics
 
@@ -99,4 +99,3 @@ To address the issue, please review and fix the following settings:
 
 * [AWS ACM certificates](https://docs.aws.amazon.com/acm/latest/userguide/gs.html)
 * [AWS VPC with public and private subnets (NAT)](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
-* [Wallarm documentation](https://docs.wallarm.com)
