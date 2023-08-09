@@ -2,10 +2,18 @@
 
 This article demonstrates the **example** on how to deploy Wallarm to AWS as an Out-of-Band solution using the [Wallarm Terraform module](https://registry.terraform.io/modules/wallarm/wallarm/aws/). It is expected that NGINX, Envoy, Istio and/or Traefik provides traffic mirroring.
 
-## Key characteristics
+## Use cases
 
-* Wallarm processes traffic in the asynchronous mode (`preset=mirror`) without affecting the current traffic flow which makes the approach the safest one.
-* Wallarm solution is deployed as a separate network layer that enables you to control it independently from other layers and place the layer in almost any network structure position. The recommended position is in the private network.
+Among all supported [Wallarm deployment options](https://docs.wallarm.com/installation/supported-deployment-options), Terraform module is recommended for Wallarm deployment on AWS VPC in these **use cases**:
+
+* Your existing infrastructure resides on AWS.
+* You leverage the Infrastructure as Code (IaC) practice. Wallarm's Terraform module allows for the automated management and provisioning of the Wallarm node on AWS, enhancing efficiency and consistency.
+
+## Requirements
+
+* Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+* Access to the account with the **Administrator** [role](https://docs.wallarm.com/user-guides/settings/users/#user-roles) in Wallarm Console in the US or EU [Cloud](https://docs.wallarm.com/about-wallarm/overview/#cloud)
+* Access to `https://us1.api.wallarm.com` if working with US Wallarm Cloud or to `https://api.wallarm.com` if working with EU Wallarm Cloud. Please ensure the access is not blocked by a firewall
 
 ## Solution architecture
 
@@ -28,18 +36,15 @@ This example has the following code components:
 
 * `main.tf`: the main configuration of the `wallarm` module to be deployed as a mirror solution. The configuration produces an internal AWS ALB and Wallarm instances.
 
-## Configuring HTTP request mirroring
+## Running the example Wallarm mirror solution
+
+To run the example Wallarm mirror solution, you need to configure HTTP request mirroring and then deploy the solution.
+
+### 1. Configuring HTTP request mirroring
 
 Traffic mirroring is a feature provided by many web and proxy servers. The [link](https://docs.wallarm.com/installation/oob/web-server-mirroring/overview/#examples-of-web-server-configuration-for-traffic-mirroring) provides the documentation on how to configure traffic mirroring with some of them.
 
-## Limitations
-
-Despite the fact that the described example solution is the most functional Out-of-Band Wallarm solution, it has some limitations inherent in the asynchronous approach:
-
-* Wallarm node does not instantly block malicious requests since traffic analysis proceeds irrespective of actual traffic flow.
-* The solution requires an additional component - the web or proxy server providing traffic mirroring or a similar tool (e.g. NGINX, Envoy, Istio, Traefik, custom Kong module, etc).
-
-## Running the example Wallarm mirror solution
+### 2. Deploy the example Wallarm mirror solution
 
 1. Sign up for Wallarm Console in the [EU Cloud](https://my.wallarm.com/nodes) or [US Cloud](https://us1.my.wallarm.com/nodes).
 1. Open Wallarm Console → **Nodes** and create the node of the **Wallarm node** type.

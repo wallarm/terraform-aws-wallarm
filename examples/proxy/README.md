@@ -6,10 +6,18 @@ Wallarm proxy solution provides an additional functional network layer serving a
 
 You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
 
-## Key characteristics
+## Use cases
 
-* Wallarm processes traffic in the synchronous mode that does not limit Wallarm capabilities and enables instant threat mitigation (`preset=proxy`).
-* Wallarm solution is deployed as a separate network layer that enables you to control it independently from other layers and place the layer in almost any network structure position. The recommended position is behind an internet-facing load balancer.
+Among all supported [Wallarm deployment options](https://docs.wallarm.com/installation/supported-deployment-options), Terraform module is recommended for Wallarm deployment on AWS VPC in these **use cases**:
+
+* Your existing infrastructure resides on AWS.
+* You leverage the Infrastructure as Code (IaC) practice. Wallarm's Terraform module allows for the automated management and provisioning of the Wallarm node on AWS, enhancing efficiency and consistency.
+
+## Requirements
+
+* Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+* Access to the account with the **Administrator** [role](https://docs.wallarm.com/user-guides/settings/users/#user-roles) in Wallarm Console in the US or EU [Cloud](https://docs.wallarm.com/about-wallarm/overview/#cloud)
+* Access to `https://us1.api.wallarm.com` if working with US Wallarm Cloud or to `https://api.wallarm.com` if working with EU Wallarm Cloud. Please ensure the access is not blocked by a firewall
 
 ## Solution architecture
 
@@ -45,13 +53,6 @@ This example has the following code components:
 * `dns.tf`: AWS Route 53 configuration provisioning DNS record for AWS ALB.
 
     To disable the feature, follow the note above.
-
-## Requirements
-
-* Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-* Access to the account with the **Administrator** role in Wallarm Console in the [EU Cloud](https://my.wallarm.com/) or [US Cloud](https://us1.my.wallarm.com/)
-* Access to `https://api.wallarm.com` if working with EU Wallarm Cloud or to `https://us1.api.wallarm.com` if working with US Wallarm Cloud. Please ensure the access is not blocked by a firewall
-* To run the example with the SSL and DNS features enabled, configure the [Route 53 hosting zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html)
 
 ## Running the example Wallarm AWS proxy solution
 
