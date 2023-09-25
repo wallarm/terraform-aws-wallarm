@@ -68,8 +68,8 @@ variable "lb_deletion_protection" {
 }
 
 variable "lb_ssl_enabled" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Whether to negotiate SSL connections between a client and an Application Load Balancer. If 'true', the 'lb_ssl_policy' and 'lb_certificate_arn' variables are required. Recommended for production deployments. More details: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies"
 }
 
@@ -170,14 +170,14 @@ variable "desired_capacity" {
 }
 
 variable "autoscaling_enabled" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Whether to enable Amazon EC2 Auto Scaling for the Wallarm cluster. More details: https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html"
 }
 
 variable "autoscaling_cpu_target" {
-  type    = string
-  default = "70.0"
+  type        = string
+  default     = "70.0"
   description = "Average CPU utilization percentage to keep the AWS Auto Scaling group at."
 }
 
@@ -267,4 +267,20 @@ variable "post_script" {
   type        = string
   default     = ""
   description = "Custom script to be run after the Wallarm node initialization script (cloud-init), e.g. to place some content from AWS S3 to an instance directory. This example will also require access to AWS S3 that you can configure via the 'extra_policies' variable."
+}
+
+variable "lb_logs_s3_bucket" {
+  type    = string
+  default = "S3 bucket for sending logs from Load Balancer to S3 bucket"
+}
+
+variable "lb_logs_prefix" {
+  type    = string
+  default = "S3 prefix for sending logs from Load Balancer to S3 bucket"
+}
+
+variable "lb_logs_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to send logs from Load Balancer to S3 bucket"
 }

@@ -32,12 +32,9 @@ resource "aws_iam_role" "default" {
   })
 }
 
-resource "aws_iam_policy_attachment" "default" {
+resource "aws_iam_role_policy_attachment" "default" {
   for_each = toset(var.extra_policies)
-
-  name = format("%s-%s", var.app_name, regex("(.*):policy/(.+)", each.value)[1])
-
-  roles = [aws_iam_role.default[0].name]
+  role     = aws_iam_role.default[0].name
 
   policy_arn = each.value
 }
