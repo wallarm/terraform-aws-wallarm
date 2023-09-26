@@ -61,3 +61,18 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "logs_prefix" {
+  type    = string
+  default = ""
+}
+
+variable "logs_s3_bucket" {
+  type    = string
+  default = ""
+}
+
+variable "logs_enabled" {
+  type    = bool
+  default = false
+}
