@@ -50,6 +50,10 @@ module "lb" {
   subnet_ids = var.lb_subnet_ids
   internal   = var.lb_internal
 
+  logs_enabled   = var.lb_logs_enabled
+  logs_s3_bucket = var.lb_logs_s3_bucket
+  logs_prefix    = var.lb_logs_prefix
+
   source_ranges = var.source_ranges
 
   preset = var.preset
