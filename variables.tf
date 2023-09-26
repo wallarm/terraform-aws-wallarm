@@ -270,13 +270,15 @@ variable "post_script" {
 }
 
 variable "lb_logs_s3_bucket" {
-  type    = string
-  default = "S3 bucket for sending logs from Load Balancer to S3 bucket"
+  type        = string
+  default     = ""
+  description = "S3 bucket for sending logs from Load Balancer to S3 bucket"
 }
 
 variable "lb_logs_prefix" {
-  type    = string
-  default = "S3 prefix for sending logs from Load Balancer to S3 bucket"
+  type        = string
+  default     = ""
+  description = "S3 prefix for sending logs from Load Balancer to S3 bucket"
 }
 
 variable "lb_logs_enabled" {
