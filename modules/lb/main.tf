@@ -17,6 +17,12 @@ resource "aws_lb" "default" {
 
   enable_http2 = true
 
+  access_logs {
+    enabled = var.logs_enabled
+    bucket  = var.logs_s3_bucket
+    prefix  = var.logs_prefix
+  }
+
   tags = var.tags
 }
 
