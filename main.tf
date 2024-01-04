@@ -65,6 +65,8 @@ module "lb" {
 
   deletion_protection = var.lb_deletion_protection
 
+  xff_header_processing_mode = var.lb_xff_header_processing_mode
+
   tags = var.tags
 }
 

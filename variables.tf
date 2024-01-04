@@ -85,6 +85,12 @@ variable "lb_certificate_arn" {
   description = "Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate. Required if 'lb_ssl_enabled' is 'true'. More details: https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html"
 }
 
+variable "lb_xff_header_processing_mode" {
+  type        = string
+  default     = null
+  description = "Determines how the load balancer modifies the X-Forwarded-For header in the HTTP request before sending the request to the target. The possible values are 'append', 'preserve', and 'remove'. The default is 'append'"
+}
+
 variable "custom_target_group" {
   type        = string
   default     = ""

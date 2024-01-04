@@ -76,3 +76,8 @@ variable "logs_enabled" {
   type    = bool
   default = false
 }
+
+variable "xff_header_processing_mode" {
+  type    = string
+  default = null
+}
