@@ -11,6 +11,8 @@ resource "aws_lb" "default" {
 
   enable_deletion_protection = var.deletion_protection
 
+  xff_header_processing_mode = var.xff_header_processing_mode
+
   security_groups = [
     aws_security_group.default[0].id,
   ]
