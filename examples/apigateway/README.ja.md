@@ -2,7 +2,7 @@
 
 この例では、[Terraform モジュール](https://registry.terraform.io/modules/wallarm/wallarm/aws/)を使用して、WallarmをAWS Virtual Private Cloud （VPC）のインラインプロキシとしてデプロイし、[Amazon API Gateway](https://aws.amazon.com/api-gateway/)を保護する方法を示しています。
 
-Wallarmのプロキシソリューションは、WAFとAPIセキュリティ機能を備えた高度なHTTPトラフィックルーターとして機能する追加のネットワーク層を提供します。  Amazon API Gatewayを含むほぼすべてのサービスタイプへのリクエストをルーティングでき、その機能は制限されません。
+Wallarmのプロキシソリューションは、WAAPとAPIセキュリティ機能を備えた高度なHTTPトラフィックルーターとして機能する追加のネットワーク層を提供します。  Amazon API Gatewayを含むほぼすべてのサービスタイプへのリクエストをルーティングでき、その機能は制限されません。
 
 ## 主な特性
 
