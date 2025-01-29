@@ -2,7 +2,7 @@
 
 This example demonstrates how to protect [Amazon API Gateway](https://aws.amazon.com/api-gateway/) with Wallarm deployed as an inline proxy to AWS Virtual Private Cloud (VPC) using the [Terraform module](https://registry.terraform.io/modules/wallarm/wallarm/aws/).
 
-Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions. It can route requests to almost any service type including Amazon API Gateway without limiting its capabilities.
+Wallarm proxy solution provides an additional functional network layer serving as an advanced HTTP traffic router with the WAAP and API security functions. It can route requests to almost any service type including Amazon API Gateway without limiting its capabilities.
 
 ## Use cases
 

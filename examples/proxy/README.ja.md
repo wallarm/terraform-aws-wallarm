@@ -2,7 +2,7 @@
 
 この例は、[Terraformモジュール](https://registry.terraform.io/modules/wallarm/wallarm/aws/)を使用して、既存のAWS Virtual Private Cloud（VPC）にインラインプロキシとしてWallarmをデプロイする方法を説明します。
 
-Wallarmのプロキシソリューションは、WAFとAPIセキュリティ機能を持つ高度なHTTPトラフィックルータとして機能する追加のネットワーク層を提供します。
+Wallarmのプロキシソリューションは、WAAPとAPIセキュリティ機能を持つ高度なHTTPトラフィックルータとして機能する追加のネットワーク層を提供します。
 
 [プロキシ高度ソリューション](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced)を試すことで、ソリューションの柔軟性を実際に確認できます。
 

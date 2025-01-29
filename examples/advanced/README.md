@@ -4,7 +4,7 @@ This example demonstrates how to deploy Wallarm as an inline proxy with advanced
 
 For an easier start with this example, have a look at the [simple proxy example](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/proxy) first. 
 
-Wallarm proxy advanced solution (as well as a simple proxy) provides an additional functional network layer serving as an advanced HTTP traffic router with the WAF and API security functions.
+Wallarm proxy advanced solution (as well as a simple proxy) provides an additional functional network layer serving as an advanced HTTP traffic router with the WAAP and API security functions.
 
 ## Key characteristics
 
