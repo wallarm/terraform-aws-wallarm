@@ -18,6 +18,8 @@ Among all supported [Wallarm deployment options](https://docs.wallarm.com/instal
 * Terraform 1.0.5 or higher [installed locally](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 * Access to the account with the **Administrator** [role](https://docs.wallarm.com/user-guides/settings/users/#user-roles) in Wallarm Console in the US or EU [Cloud](https://docs.wallarm.com/about-wallarm/overview/#cloud)
 * Access to `https://us1.api.wallarm.com` if working with US Wallarm Cloud or to `https://api.wallarm.com` if working with EU Wallarm Cloud. Please ensure the access is not blocked by a firewall
+* Any AWS region of your choice, there are no specific restrictions on the region for the Wallarm node deployment
+* Understanding of Terraform, AWS EC2, Security Groups and other AWS services
 
 ## Solution architecture
 
