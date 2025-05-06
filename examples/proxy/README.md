@@ -6,6 +6,11 @@ Wallarm proxy solution provides an additional functional network layer serving a
 
 You can see the solution flexibility in action by trying the [proxy advanced solution](https://github.com/wallarm/terraform-aws-wallarm/tree/main/examples/advanced).
 
+!!! info "Security note"
+    This solution is designed to follow AWS security best practices. We recommend avoiding the use of the AWS root account for deployment. Instead, use IAM users or roles with only the necessary permissions.
+    
+    The deployment process assumes the principle of least privilege, granting only the minimal access required to provision and operate Wallarm components.
+
 ## Use cases
 
 Among all supported [Wallarm deployment options](https://docs.wallarm.com/installation/supported-deployment-options), Terraform module is recommended for Wallarm deployment on AWS VPC in these **use cases**:
@@ -20,6 +25,12 @@ Among all supported [Wallarm deployment options](https://docs.wallarm.com/instal
 * Access to `https://us1.api.wallarm.com` if working with US Wallarm Cloud or to `https://api.wallarm.com` if working with EU Wallarm Cloud. Please ensure the access is not blocked by a firewall
 * Any AWS region of your choice, there are no specific restrictions on the region for the Wallarm node deployment
 * Understanding of Terraform, AWS EC2, Security Groups and other AWS services
+* AWS root account should never be used for deploying resources
+
+    Please use a dedicated IAM user or role with minimal necessary permissions to perform the deployment described in this guide.
+* Avoid the use of broad permissions (e.g., `AdministratorAccess`) and assign only the specific actions needed for this module to operate
+
+    The IAM roles and permissions used in this deployment are designed following the principle of least privilege. Only the permissions required to create and manage the necessary AWS resources (e.g., EC2, networking, logging) should be granted.
 
 ## Solution architecture
 
