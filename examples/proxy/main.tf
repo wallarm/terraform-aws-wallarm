@@ -36,8 +36,6 @@ module "wallarm" {
   host  = var.host
   token = var.token
 
-  lb_deletion_protection = false
-
   depends_on = [
     aws_acm_certificate_validation.default,
   ]

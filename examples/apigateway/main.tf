@@ -28,8 +28,6 @@ module "wallarm" {
 
   host  = var.host
   token = var.token
-
-  lb_deletion_protection = false
 }
 
 output "suboutputs" {
