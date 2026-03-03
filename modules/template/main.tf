@@ -28,6 +28,10 @@ resource "aws_launch_template" "default" {
     enabled = true
   }
 
+  metadata_options {
+    http_tokens = "required"
+  }
+
   disable_api_termination              = true
   instance_initiated_shutdown_behavior = "terminate"
 
